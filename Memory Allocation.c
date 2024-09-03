@@ -60,7 +60,7 @@ int main(){
     printf("%p\n", q);
 
     */
-
+   /*
    int a = 23;
     
     int* p = &a;
