@@ -82,13 +82,5 @@ int main(){
     printf("%d\n\n", **r);
 
     printf("%d\n", *p);
-
-
-
-
-
-
-
-
-
+    */
 }
