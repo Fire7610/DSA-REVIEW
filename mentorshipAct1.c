@@ -39,4 +39,9 @@ int main(){
 
     I=f2;
 
+
+    free(A);
+    free(B);
+    free(C);
+    free(G);
 }
