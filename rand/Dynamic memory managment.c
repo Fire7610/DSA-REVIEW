@@ -1,11 +1,14 @@
 #include <stdio.h>
 
 int main()  {
-    char data1 ='X';
-    int data2 = 100;
-    float data3 = 3.14;
+    int rows = 2, cols = 2;
 
-    void *ptr1 = &data3;
-    printf("%.2lf\n", *((float*)ptr1));
+    int** matrix;
 
+    matrix = (int **)malloc(rows * sizeof(int *));
+    for (int i = 0; i < rows; i++) {
+        matrix[i] = (int *)malloc(cols * sizeof(int));
+    }
+
+    
 }
