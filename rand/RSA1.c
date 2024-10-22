@@ -19,7 +19,6 @@ unsigned long long modInv(unsigned long long e, unsigned long long phi){
         temp = t; t = newt; newt = temp - q*newt;
         temp = r; r = newr; newr = temp - q*newr;
     }
-
     if(t<0) t+=phi;
     return t;
 }
@@ -37,12 +36,10 @@ void decryptMes(unsigned long long message[], int length, unsigned long long d, 
     }
 }
 int main(){ 
-    // Public Key (n, e)
     unsigned long long p = 43, q = 59;
-    unsigned long long n = p * q; //== 2537
+    unsigned long long n = p * q;
     unsigned long long e = 13;
-    // Compute φ(n) = (p-1) * (q-1)
-    unsigned long long phi_n = (p - 1) * (q - 1); //2437
+    unsigned long long phi_n = (p - 1) * (q - 1);
     unsigned long long d = modInv(e, phi_n);
 
     unsigned long long message[3] = {19,1900,210};
@@ -53,3 +50,4 @@ int main(){
     printf("\n");
     decryptMes(encrypted, length, d,n);
 }
+

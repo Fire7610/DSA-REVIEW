@@ -5,7 +5,7 @@ int main(){
     scanf("%d", &tc);
 
     char arr[tc];
-    for (size_t i = 0; i < tc; i++)
+    for (int i = 0; i < tc; i++)
         scanf(" %c", &arr[i]);
     
     for(int i = 0; i<tc; i++){

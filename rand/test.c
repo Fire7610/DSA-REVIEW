@@ -2,17 +2,28 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-
-int* decOct(int i) {
-    int octalNum = 0, placeValue = 1;
-
-    while (i != 0) {
-        octalNum += (i % 8) * placeValue;
-        i /= 8;
-        placeValue *= 10;
+char* decToBinary(int n) {
+    char* binary = (char*)malloc(33 * sizeof(char));
+    if (binary == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(1);
     }
-    int* output = &octalNum;
-    return output;
+
+    binary[32] = '\0';
+    int index = 31;
+
+    if (n == 0) {
+        binary[index] = '0';
+        return &binary[index];
+    }
+
+    while (n > 0) {
+        binary[index] = (n % 2) + '0';
+        n /= 2;
+        index--;
+    }
+
+    return &binary[index + 1];
 }
 
 int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
@@ -94,8 +105,66 @@ bool isPalindrome(int x) {
     return false;
 }
 
+char singleNumber(char* nums, int numsSize) {
+    char out;
+    for(int i = 0; i<numsSize;i++){
+        out ^= nums[i];
+    }
+    return out;
+}
+
+int romanToInt(char* s) {
+    int size = strlen(s), i = 0, out = 0;
+
+    while(i!=size){
+        while(s[i]=='I'){
+            i+=1;
+            out++;
+            if(i==size) break;
+            
+            if(s[i] == 'V'){
+                i++;
+                out+=5;
+                out--;
+                if(i=size) break;
+            }
+            if(s[i] == 'X'){
+                i++;
+                out+=10;
+                out--;
+                if(i=size) break;
+            }
+        }
+    }
+    return out;
+}
+
+char* decToBinary(int n) {
+    char* binary = (char*)malloc(33 * sizeof(char));
+    if (binary == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(1);
+    }
+
+    binary[32] = '\0';
+    int index = 31;
+
+    if (n == 0) {
+        binary[index] = '0';
+        return &binary[index];
+    }
+
+    while (n > 0) {
+        binary[index] = (n % 2) + '0';
+        n /= 2;
+        index--;
+    }
+
+    return &binary[index + 1];
+}
+
 int main()
 {
-    int x = 10;
-    printf("%d\n", rev(123));
+    char testp[]={"III"};
+    printf("%d", decOct(7672));
 }
