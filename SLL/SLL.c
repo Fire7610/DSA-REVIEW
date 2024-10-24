@@ -1,13 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-typedef struct ListNode {
+typedef struct snode {
     int val;
-    struct ListNode *next;
-    }*SNODE;
-
-SNODE createList(){
-    return NULL;
-}
+    struct snode*next;
+}*SNODE;
 
 typedef struct sll{
     SNODE head;
@@ -21,77 +17,113 @@ SLL createSLL(){
     return x;
 }
 
-void addLast(SNODE* l2, int newData){
-    SNODE new = (SNODE) malloc(sizeof(struct ListNode));
-    new->val = newData;
-    new->next = NULL;
+void printSLL(SLL sll){
 
+    SNODE p = sll->head;
 
-    if(*l2 == NULL){
-        *l2 = new;
-        return;
+    while(p != NULL){
+        printf("%d ", p->val);
+        p = p->next;
     }
-    SNODE Last = *l2;
-    while(Last->next!=NULL){
-        Last = Last->next;
-    }
-    Last->next = new;
+    printf("\n");
 }
 
-struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
-    struct ListNode* temp = (struct ListNode*) malloc(sizeof(struct ListNode));
-    struct ListNode* temp1 = temp;
-    int carry = 0;  
+void addFirst(SLL sll, int val){
+    SNODE p = sll->head;
 
-    while(l1 != NULL || l2 != NULL){
-        int x = (l1 != NULL) ? l1 -> val : 0;
-        int y = (l2 != NULL) ? l2 -> val : 0;
-        
-        int sum = x+y+carry;
-        carry = sum/10;
-        temp1->val = sum%10;
-        
-        if (l1!=NULL) l1 = l1->next;
-        if (l2!=NULL) l2 = l2->next;
+    if(p == NULL){
+        SNODE q = (SNODE) malloc(sizeof(struct snode));
+        q->val = val;
+        q->next = NULL;
+        sll->head = q;
+        sll->size++;
+    } else {
+        SNODE q = (SNODE) malloc(sizeof(struct snode));
+        q->val = val;
+        q->next = p;
+        sll->head = q;
+        sll->size++;
+    }
+}
 
-        if(l1 != NULL||l2 != NULL){
-            temp1->next = (struct ListNode*) malloc(sizeof(struct ListNode));
-            temp1 = temp1->next;
+void addLast(SLL sll, int val){
+
+    SNODE p = sll->head;
+
+    if(p == NULL){
+        SNODE q = (SNODE) malloc(sizeof(struct snode));
+        q->val = val;
+        q->next = NULL;
+        sll->head = q;
+        sll->size++;
+    } else {
+        SNODE q = (SNODE) malloc(sizeof(struct snode));
+        q->val = val;
+        q->next = NULL;
+
+        while(p->next != NULL){
+            p = p->next;
         }
-        else
-            temp1->next = NULL;        
+
+        p->next = q;
+        sll->size++;
     }
-    if(carry > 0){
-        temp1 -> next = (struct ListNode*) malloc(sizeof(struct ListNode));
-        temp1 = temp1->next;
-        temp1 -> val = carry;
-        temp1->next = NULL;
-    }
-    
-    return temp;
 }
 
-void print(SNODE l1){
-    while(l1 != NULL){
-        printf("%d ", l1->val);
-        l1 = l1->next;
+void delVal(SLL sll, int val){
+
+    while(sll->head != NULL && sll->head->val == val){
+        SNODE q = sll->head;
+        sll->head = sll->head->next;
+        free(q); 
+        sll->size--;    
     }
-    //printf("\n");
+
+    if(sll->head == NULL)
+        return;
+
+    SNODE p = sll->head;
+
+    while(p != NULL && p->next != NULL){
+        if(p->next->val == val){
+            SNODE q = p->next;
+            p->next = p->next->next;
+            free(q);
+            sll->size--;
+        } else {
+            p = p->next;
+        }
+    }
+}
+
+
+void addValBetXY(SLL sll, int val,int x, int y){
+    SNODE p = sll->head;
+
+
+    while(p!=NULL && p->next->next != NULL){
+        if(p->val == x && p->next->val == y){
+            SNODE new = (SNODE) malloc(sizeof(struct snode));
+            new->val = val;
+            new->next = p->next;
+            p->next = new;
+            p = p->next;  
+        }
+        p = p->next;
+    }
 }
 
 int main(){
-    SNODE l1 = createList();
-    SNODE l2 = createList();
-    addLast(&l1, 1);
-    addLast(&l1, 2);
-    addLast(&l1, 3);
-    
-    addLast(&l2, 1);
-    addLast(&l2, 2);
-    addLast(&l2, 3);
-    
-    SNODE l3 = createList();
-    l3 = addTwoNumbers(l1,l2);
-    
-    print(l3);
+    SLL sll = createSLL();
+
+    addLast(sll, 1);
+    addLast(sll, 3);
+    addLast(sll, 4);
+    addLast(sll, 5);
+    printSLL(sll);
+
+    addValBetXY(sll, 2,1,3);
+
+    printSLL(sll);
+
 }
