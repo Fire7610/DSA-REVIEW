@@ -18,7 +18,6 @@ SLL createSLL(){
 }
 
 void printSLL(SLL sll){
-
     SNODE p = sll->head;
 
     while(p != NULL){
